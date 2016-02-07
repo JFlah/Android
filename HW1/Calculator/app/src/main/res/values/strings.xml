@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Calculator</string>
+    <string name="deleteButton">DELETE</string>
+    <string name="sevenKey">7</string>
+    <string name="eightKey">8</string>
+    <string name="nineKey">9</string>
+    <string name="fourKey">4</string>
+    <string name="fiveKey">5</string>
+    <string name="sixKey">6</string>
+    <string name="oneKey">1</string>
+    <string name="twoKey">2</string>
+    <string name="threeKey">3</string>
+    <string name="pointKey">.</string>
+    <string name="zeroKey">0</string>
+    <string name="equalsKey">=</string>
+    <string name="divideKey">/</string>
+    <string name="multiplyKey">x</string>
+    <string name="minusKey">-</string>
+    <string name="plusKey">+</string>
+</resources>
