@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Hangman</string>
+    <string name="aButton">A</string>
+    <string name="bButton">B</string>
+    <string name="cButton">C</string>
+    <string name="dButton">D</string>
+    <string name="eButton">E</string>
+    <string name="fButton">F</string>
+    <string name="gButton">G</string>
+    <string name="hButton">H</string>
+    <string name="iButton">I</string>
+    <string name="jButton">J</string>
+    <string name="kButton">K</string>
+    <string name="lButton">L</string>
+    <string name="mButton">M</string>
+    <string name="nButton">N</string>
+    <string name="oButton">O</string>
+    <string name="pButton">P</string>
+    <string name="qButton">Q</string>
+    <string name="rButton">R</string>
+    <string name="sButton">S</string>
+    <string name="tButton">T</string>
+    <string name="uButton">U</string>
+    <string name="vButton">V</string>
+    <string name="wButton">W</string>
+    <string name="xButton">X</string>
+    <string name="yButton">Y</string>
+    <string name="zButton">Z</string>
+    <string name="resetButton">RESET</string>
+    <string name="wordSoFar">The Word So Far:</string>
+</resources>
