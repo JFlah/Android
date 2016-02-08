@@ -80,21 +80,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insert(int i) {
-        str += Integer.toString(i) + " ";
-        display.setText(str);
+        if (str.length() > 1) {
+            if (!Character.isDigit(str.charAt(str.length() - 2))) {
+                str += Integer.toString(i) + " ";
+                display.setText(str);
+            }
+        } else {
+            str += Integer.toString(i) + " ";
+            display.setText(str);
+        }
     }
 
     private void insertOp(char c) {
-        if (str.length() > 0) {
-            if (str.charAt(str.length() - 1) != '/' && str.charAt(str.length() - 1) != '*'
-                    && str.charAt(str.length() - 1) != '-' && str.charAt(str.length() - 1) != '+' && c != '.') {
+        if (str.length() > 1) {
+            if (str.charAt(str.length() - 2) != '/' && str.charAt(str.length() - 2) != '*'
+                    && str.charAt(str.length() - 2) != '-' && str.charAt(str.length() - 2) != '+' && c != '.') {
                 str += c + " ";
                 display.setText(str);
             }
         }
         if (c == '.') {
-            if (str.length() > 0) {
-                if (str.charAt(str.length() - 1) != '.') {
+            if (str.length() > 1) {
+                if (str.charAt(str.length() - 2) != '.') {
                     str += c + " ";
                     display.setText(str);
                 }
@@ -107,19 +114,21 @@ public class MainActivity extends AppCompatActivity {
 
     private void delete() {
         if (str.length() >= 2) {
-            str = str.substring(0, str.length()-2);
+            str = str.substring(0, str.length() - 2);
         }
         if (str.length() == 1) {
-            str = str.substring(0, str.length()-1);
+            str = str.substring(0, str.length() - 1);
         }
         display.setText(str);
     }
 
     private void doCalc() {
         String equation = display.getText().toString();
-        double answer = eval(equation);
 
-        display.setText(Double.toString(answer));
+        if (!equation.isEmpty()) {
+            double answer = eval(equation);
+            display.setText(Double.toString(answer));
+        }
     }
 
     public static double eval(final String str) {
@@ -137,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
             double parse() {
                 eatChar();
                 double v = parseExpression();
-                if (c != -1) throw new RuntimeException("Unexpected: " + (char)c);
+                if (c != -1) throw new RuntimeException("Unexpected: " + (char) c);
                 return v;
             }
 
@@ -149,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
 
             double parseExpression() {
                 double v = parseTerm();
-                for (;;) {
+                for (; ; ) {
                     eatSpace();
                     if (c == '+') { // addition
                         eatChar();
@@ -165,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
 
             double parseTerm() {
                 double v = parseFactor();
-                for (;;) {
+                for (; ; ) {
                     eatSpace();
                     if (c == '/') { // division
                         eatChar();
@@ -195,10 +204,10 @@ public class MainActivity extends AppCompatActivity {
                 } else { // numbers
                     StringBuilder sb = new StringBuilder();
                     while ((c >= '0' && c <= '9') || c == '.') {
-                        sb.append((char)c);
+                        sb.append((char) c);
                         eatChar();
                     }
-                    if (sb.length() == 0) throw new RuntimeException("Unexpected: " + (char)c);
+                    if (sb.length() == 0) throw new RuntimeException("Unexpected: " + (char) c);
                     v = Double.parseDouble(sb.toString());
                 }
                 eatSpace();
