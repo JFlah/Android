@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.HashSet;
+
 public class MainActivity extends AppCompatActivity {
     TextView display;
     public String str = "";
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
                 insert(6);
                 break;
             case R.id.multiplyButton:
-                insertOp('x');
+                insertOp('*');
                 break;
             case R.id.oneButton:
                 insert(1);
@@ -83,8 +85,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertOp(char c) {
-        str += c + " ";
-        display.setText(str);
+        if (str.length() > 0) {
+            if (str.charAt(str.length() - 1) != '/' && str.charAt(str.length() - 1) != '*'
+                    && str.charAt(str.length() - 1) != '-' && str.charAt(str.length() - 1) != '+' && c != '.') {
+                str += c + " ";
+                display.setText(str);
+            }
+        }
+        if (c == '.') {
+            if (str.length() > 0) {
+                if (str.charAt(str.length() - 1) != '.') {
+                    str += c + " ";
+                    display.setText(str);
+                }
+            } else {
+                str += c + " ";
+                display.setText(str);
+            }
+        }
     }
 
     private void delete() {
@@ -98,8 +116,111 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doCalc() {
-        
+        String equation = display.getText().toString();
+        double answer = eval(equation);
+
+        display.setText(Double.toString(answer));
     }
+
+    public static double eval(final String str) {
+        class Parser {
+            int pos = -1, c;
+
+            void eatChar() {
+                c = (++pos < str.length()) ? str.charAt(pos) : -1;
+            }
+
+            void eatSpace() {
+                while (Character.isWhitespace(c)) eatChar();
+            }
+
+            double parse() {
+                eatChar();
+                double v = parseExpression();
+                if (c != -1) throw new RuntimeException("Unexpected: " + (char)c);
+                return v;
+            }
+
+            // Grammar:
+            // expression = term | expression `+` term | expression `-` term
+            // term = factor | term `*` factor | term `/` factor | term brackets
+            // factor = brackets | number | factor `^` factor
+            // brackets = `(` expression `)`
+
+            double parseExpression() {
+                double v = parseTerm();
+                for (;;) {
+                    eatSpace();
+                    if (c == '+') { // addition
+                        eatChar();
+                        v += parseTerm();
+                    } else if (c == '-') { // subtraction
+                        eatChar();
+                        v -= parseTerm();
+                    } else {
+                        return v;
+                    }
+                }
+            }
+
+            double parseTerm() {
+                double v = parseFactor();
+                for (;;) {
+                    eatSpace();
+                    if (c == '/') { // division
+                        eatChar();
+                        v /= parseFactor();
+                    } else if (c == '*' || c == '(') { // multiplication
+                        if (c == '*') eatChar();
+                        v *= parseFactor();
+                    } else {
+                        return v;
+                    }
+                }
+            }
+
+            double parseFactor() {
+                double v;
+                boolean negate = false;
+                eatSpace();
+                if (c == '+' || c == '-') { // unary plus & minus
+                    negate = c == '-';
+                    eatChar();
+                    eatSpace();
+                }
+                if (c == '(') { // brackets
+                    eatChar();
+                    v = parseExpression();
+                    if (c == ')') eatChar();
+                } else { // numbers
+                    StringBuilder sb = new StringBuilder();
+                    while ((c >= '0' && c <= '9') || c == '.') {
+                        sb.append((char)c);
+                        eatChar();
+                    }
+                    if (sb.length() == 0) throw new RuntimeException("Unexpected: " + (char)c);
+                    v = Double.parseDouble(sb.toString());
+                }
+                eatSpace();
+                if (c == '^') { // exponentiation
+                    eatChar();
+                    v = Math.pow(v, parseFactor());
+                }
+                if (negate) v = -v; // unary minus is applied after exponentiation; e.g. -3^2=-9
+                return v;
+            }
+        }
+        return new Parser().parse();
+    }
+
+//    private boolean isOp(String s, int element) {
+//        HashSet<Integer> hs = new HashSet<>();
+//        if (s.equals("+") || s.equals("-") || s.equals("/") || s.equals("x")) {
+//            hs.add(element);
+//            return true;
+//        }
+//        return false;
+//    }
 
 //    private void reset() {
 //        str = "";
