@@ -75,28 +75,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         display.setText(currentGuess + " Used " + Integer.toString(guessesGiven - guessesLeft) + " of " + guessesGiven + " guesses.");
-        Handler handler = new Handler();
+//        Handler handler = new Handler();
         // WIN
         if (currentGuess.equals(word)) {
-            display.setText("You WIN! The word was " + word + ". You used " + Integer.toString(guessesGiven - guessesLeft) + " guesses. Click Reset or Wait!");
+            display.setText("You WIN! The word was " + word + ". You used " + Integer.toString(guessesGiven - guessesLeft) + " guesses. Click Reset to Play Again!");
             display.setFocusable(false);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    start();
-                }
-            }, 5000);
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    start();
+//                }
+//            }, 5000);
         }
         // LOSS
         if (guessesLeft <= 0 && !(currentGuess.equals(word))) {
-            display.setText("You lost! The word was: " + word + ". You used " + guessesGiven + " guesses. Click Reset or Wait!");
+            display.setText("You lost! The word was: " + word + ". You used " + guessesGiven + " guesses. Click Reset to Play Again!");
             display.setFocusable(false);
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    start();
-                }
-            }, 5000);
+//            handler.postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+//                    start();
+//                }
+//            }, 5000);
         }
     }
 

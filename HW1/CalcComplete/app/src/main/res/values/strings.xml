@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CalcComplete</string>
     <string name="deleteButton">DELETE</string>
+    <string name="clearButton">C</string>
     <string name="sevenKey">7</string>
     <string name="eightKey">8</string>
     <string name="nineKey">9</string>

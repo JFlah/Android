@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.delete:
                 delete();
                 break;
+            case R.id.clear:
+                clear();
+                break;
             case R.id.sevenButton:
                 insert(7);
                 break;
@@ -123,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
             }
             str = str.substring(0, str.length() - 1);
         }
+        display.setText(str);
+    }
+
+    private void clear() {
+        str="";
         display.setText(str);
     }
 
