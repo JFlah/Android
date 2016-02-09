@@ -207,7 +207,8 @@
             android:id="@+id/pointButton"
             android:background="@color/lightGray"
             android:textSize="35sp"
-            android:text="@string/pointKey" />
+            android:text="@string/pointKey"
+            android:onClick="clickBtn"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

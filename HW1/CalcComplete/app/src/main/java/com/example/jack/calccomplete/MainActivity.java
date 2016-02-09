@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class MainActivity extends AppCompatActivity {
     TextView display;
     public String str = "";
+    public boolean dotAlready = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,15 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insert(int i) {
-        if (str.length() > 1) {
-            if (!Character.isDigit(str.charAt(str.length() - 2))) {
-                str += Integer.toString(i) + " ";
-                display.setText(str);
-            }
-        } else {
-            str += Integer.toString(i) + " ";
-            display.setText(str);
-        }
+        str += Integer.toString(i) + " ";
+        display.setText(str);
     }
 
     private void insertOp(char c) {
@@ -97,143 +92,142 @@ public class MainActivity extends AppCompatActivity {
                     && str.charAt(str.length() - 2) != '-' && str.charAt(str.length() - 2) != '+' && c != '.') {
                 str += c + " ";
                 display.setText(str);
+                dotAlready = false;
             }
         }
-        if (c == '.') {
+        if (c == '.' && !dotAlready) {
             if (str.length() > 1) {
                 if (str.charAt(str.length() - 2) != '.') {
                     str += c + " ";
                     display.setText(str);
+                    dotAlready = true;
                 }
             } else {
                 str += c + " ";
                 display.setText(str);
+                dotAlready = true;
             }
         }
     }
 
     private void delete() {
         if (str.length() >= 2) {
+            if (str.charAt(str.length() - 2) == '.') {
+                dotAlready = false;
+            }
             str = str.substring(0, str.length() - 2);
         }
         if (str.length() == 1) {
+            if (str.charAt(str.length() - 1) == '.') {
+                dotAlready = false;
+            }
             str = str.substring(0, str.length() - 1);
         }
         display.setText(str);
     }
 
     private void doCalc() {
+        Queue<Float> nums = new LinkedList<>();
+        Queue<String> ops = new LinkedList<>();
+
+        StringBuilder currentNum = new StringBuilder();
+
         String equation = display.getText().toString();
+        String delims = "[ ]+";
+        String[] tokens = equation.split(delims);
 
-        if (!equation.isEmpty()) {
-            double answer = eval(equation);
-            display.setText(Double.toString(answer));
-        }
-    }
-
-    public static double eval(final String str) {
-        class Parser {
-            int pos = -1, c;
-
-            void eatChar() {
-                c = (++pos < str.length()) ? str.charAt(pos) : -1;
-            }
-
-            void eatSpace() {
-                while (Character.isWhitespace(c)) eatChar();
-            }
-
-            double parse() {
-                eatChar();
-                double v = parseExpression();
-                if (c != -1) throw new RuntimeException("Unexpected: " + (char) c);
-                return v;
-            }
-
-            // Grammar:
-            // expression = term | expression `+` term | expression `-` term
-            // term = factor | term `*` factor | term `/` factor | term brackets
-            // factor = brackets | number | factor `^` factor
-            // brackets = `(` expression `)`
-
-            double parseExpression() {
-                double v = parseTerm();
-                for (; ; ) {
-                    eatSpace();
-                    if (c == '+') { // addition
-                        eatChar();
-                        v += parseTerm();
-                    } else if (c == '-') { // subtraction
-                        eatChar();
-                        v -= parseTerm();
-                    } else {
-                        return v;
-                    }
-                }
-            }
-
-            double parseTerm() {
-                double v = parseFactor();
-                for (; ; ) {
-                    eatSpace();
-                    if (c == '/') { // division
-                        eatChar();
-                        v /= parseFactor();
-                    } else if (c == '*' || c == '(') { // multiplication
-                        if (c == '*') eatChar();
-                        v *= parseFactor();
-                    } else {
-                        return v;
-                    }
-                }
-            }
-
-            double parseFactor() {
-                double v;
-                boolean negate = false;
-                eatSpace();
-                if (c == '+' || c == '-') { // unary plus & minus
-                    negate = c == '-';
-                    eatChar();
-                    eatSpace();
-                }
-                if (c == '(') { // brackets
-                    eatChar();
-                    v = parseExpression();
-                    if (c == ')') eatChar();
-                } else { // numbers
-                    StringBuilder sb = new StringBuilder();
-                    while ((c >= '0' && c <= '9') || c == '.') {
-                        sb.append((char) c);
-                        eatChar();
-                    }
-                    if (sb.length() == 0) throw new RuntimeException("Unexpected: " + (char) c);
-                    v = Double.parseDouble(sb.toString());
-                }
-                eatSpace();
-                if (c == '^') { // exponentiation
-                    eatChar();
-                    v = Math.pow(v, parseFactor());
-                }
-                if (negate) v = -v; // unary minus is applied after exponentiation; e.g. -3^2=-9
-                return v;
+        // create our list of nums and ops
+        for (int i = 0; i < tokens.length; i++) {
+            if (!isOp(tokens[i])) {
+                currentNum.append(tokens[i]);
+            } else { // isOp
+                nums.add(Float.parseFloat(currentNum.toString()));
+                ops.add(tokens[i]);
+                currentNum.delete(0, currentNum.length());
             }
         }
-        return new Parser().parse();
+        // catch the final number and add it (if there is one)
+        if (currentNum.length() != 0) {
+            nums.add(Float.parseFloat(currentNum.toString()));
+        }
+
+        // Check to see if there's an extra operator and fix it
+
+        if (ops.size() == nums.size()) {
+            Queue<String> ops2 = new LinkedList<>();
+            int length = ops.size();
+            for (int i = 0; i < length - 1; i++) {
+                String cur = ops.remove();
+                ops2.add(cur);
+            }
+            ops = ops2;
+        }
+
+        // I now have a queue of nums and the queue of ops
+
+        Float result = 0f;
+
+        // If they hit = with no second number, default to the first
+        if (nums.size() == 1) {
+            display.setText(nums.remove().toString());
+        }
+
+        // start calc'ing
+        int size = ops.size();
+        for (int i = 0; i < size; i++) {
+            Float first = 0f, second = 0f;
+            Float next = 0f;
+            switch (ops.remove()) {
+                case "+":
+                    if (i == 0) {
+                        first = nums.remove();
+                        second = nums.remove();
+                        result += first + second;
+                    } else {
+                        next = nums.remove();
+                        result += next;
+                    }
+                    break;
+                case "-":
+                    if (i == 0) {
+                        first = nums.remove();
+                        second = nums.remove();
+                        result += first - second;
+                    } else {
+                        next = nums.remove();
+                        result -= next;
+                    }
+                    break;
+                case "/":
+                    if (i == 0) {
+                        first = nums.remove();
+                        second = nums.remove();
+                        result += first / second;
+                    } else {
+                        next = nums.remove();
+                        result /= next;
+                    }
+                    break;
+                case "*":
+                    if (i == 0) {
+                        first = nums.remove();
+                        second = nums.remove();
+                        result += first * second;
+                    } else {
+                        next = nums.remove();
+                        result *= next;
+                    }
+                    break;
+            }
+        }
+        display.setText(result.toString());
     }
 
-//    private boolean isOp(String s, int element) {
-//        HashSet<Integer> hs = new HashSet<>();
-//        if (s.equals("+") || s.equals("-") || s.equals("/") || s.equals("x")) {
-//            hs.add(element);
-//            return true;
-//        }
-//        return false;
-//    }
-
-//    private void reset() {
-//        str = "";
-//        display.setText(str);
-//    }
-
+    // determine if the current token is an operator
+    private boolean isOp(String s) {
+        if (s.equals("+") || s.equals("-") || s.equals("/") || s.equals("*")) {
+            return true;
+        }
+        return false;
+    }
 }

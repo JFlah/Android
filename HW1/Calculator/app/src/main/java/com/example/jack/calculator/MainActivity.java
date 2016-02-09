@@ -13,6 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     TextView display;
     public String str = "";
+    public boolean dotAlready = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         display = (TextView) findViewById(R.id.display);
     }
-    
+
     public void clickBtn(View v) {
         switch (v.getId()) {
             case R.id.delete:
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 insert(6);
                 break;
             case R.id.multiplyButton:
-                insertOp('x');
+                insertOp('*');
                 break;
             case R.id.oneButton:
                 insert(1);
@@ -83,16 +84,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void insertOp(char c) {
-        str += c + " ";
-        display.setText(str);
+        if (str.length() > 1) {
+            if (str.charAt(str.length() - 2) != '/' && str.charAt(str.length() - 2) != '*'
+                    && str.charAt(str.length() - 2) != '-' && str.charAt(str.length() - 2) != '+' && c != '.') {
+                str += c + " ";
+                display.setText(str);
+                dotAlready = false;
+            }
+        }
+        if (c == '.' && !dotAlready) {
+            if (str.length() > 1 ) {
+                if (str.charAt(str.length() - 2) != '.') {
+                    str += c + " ";
+                    display.setText(str);
+                    dotAlready = true;
+                }
+            } else {
+                str += c + " ";
+                display.setText(str);
+                dotAlready = true;
+            }
+        }
     }
 
     private void delete() {
         if (str.length() >= 2) {
-            str = str.substring(0, str.length()-2);
+            if (str.charAt(str.length()-2) == '.') {
+                dotAlready = false;
+            }
+            str = str.substring(0, str.length() - 2);
         }
         if (str.length() == 1) {
-            str = str.substring(0, str.length()-1);
+            if (str.charAt(str.length()-1) == '.') {
+                dotAlready = false;
+            }
+            str = str.substring(0, str.length() - 1);
         }
         display.setText(str);
     }
@@ -100,6 +126,6 @@ public class MainActivity extends AppCompatActivity {
     private void reset() {
         str = "";
         display.setText(str);
+        dotAlready = false;
     }
-
 }
