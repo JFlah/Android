@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Simple Tip Calculator</string>
+    <string name="totalText">Total (each):</string>
+    <string name="tipAmtText">Tip Amount (each):</string>
+    <string name="tipPctText">Tip Percentage:</string>
+    <string name="numPeopleText"># of People:</string>
+    <string name="billAmtText">Bill Amount (after tax)</string>
+
+    <string name="tenPct">10%</string>
+    <string name="fifPct">15%</string>
+    <string name="twnPct">20%</string>
+
+    <string name="roundUp">ROUND UP</string>
+    <string name="reset">RESET</string>
+
+    <string name="zeroDollars">$0.00</string>
+    <string name="zeroPercent">0%</string>
+</resources>

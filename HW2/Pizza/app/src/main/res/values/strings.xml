@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Pizza</string>
+    <string name="main_title">Flah\'s Pizza</string>
+    <string name="size_title">Pick a Size</string>
+    <string name="veg_title">Pick Your Veggies</string>
+    <string name="meat_title">Pick Your Meats</string>
+    <string name="checkout_title">Review and Place Your Order</string>
+
+    <string name="sizeButton">Choose Size</string>
+    <string name="veggieButton">Choose Veggies</string>
+    <string name="meatButton">Choose Meat</string>
+    <string name="checkoutButton">Checkout</string>
+    <string name="orderButton">Order</string>
+
+    <string name="smallSize">Small</string>
+    <string name="mediumSize">Medium</string>
+    <string name="largeSize">Large</string>
+
+    <string name="error">Please select a size before placing your order.</string>
+    <string name="userHint">Enter Customer Name</string>
+
+    <string name="Size">Size:</string>
+    <string name="Veggies">Veggies:</string>
+    <string name="Meats">Meats:</string>
+
+</resources>
