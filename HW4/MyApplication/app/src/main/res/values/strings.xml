@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">SQLPartA</string>
+    <string name="to_do_title">Your ToDo List:</string>
+    <string name="to_do_layout_title">Title: </string>
+    <string name="add_layout_title">Create New Item: </string>
+    <string name="newItemButton">New Item</string>
+    <string name="clearItemsButton">Clear Whole List</string>
+    <string name="add_title_hint">Item Title</string>
+    <string name="add_description_hint">Item Description</string>
+    <string name="add_button">Add</string>
+    <string name="show_detail">Show Detail</string>
+    <string name="edit_detail">Edit Detail</string>
+    <string name="list_button">Refresh List</string>
+    <string name="back_button">Back</string>
+    <string name="edit_button">Save Changes</string>
+    <string name="deleteSelectedButton">Delete Selected</string>
+</resources>

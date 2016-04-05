@@ -15,31 +15,41 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="35sp"
+        android:layout_weight="0"
         android:textStyle="bold"
         android:text="@string/to_do_title" />
 
     <ListView
         android:id="@+id/toToListView"
+        android:layout_weight="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"></ListView>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/add_button"
-        android:textSize="25sp"
-        android:text="@string/newItemButton"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/clear_button"
-        android:textSize="25sp"
-        android:text="@string/clearItemsButton"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/deleteSelectedButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:text="@string/deleteSelectedButton"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/add_button"
+            android:textSize="25sp"
+            android:text="@string/newItemButton"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/clear_button"
+            android:textSize="25sp"
+            android:text="@string/clearItemsButton"/>
+
+        <Button
+            android:id="@+id/deleteSelectedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:text="@string/deleteSelectedButton"/>
+    </LinearLayout>
 </LinearLayout>

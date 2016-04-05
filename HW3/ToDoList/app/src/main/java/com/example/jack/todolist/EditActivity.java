@@ -34,16 +34,6 @@ public class EditActivity extends AppCompatActivity {
 
         final int position = i.getIntExtra("Position", 0);
 
-//        ListView lv = (ListView) findViewById(R.id.toToListView);
-//        Bundle bundle = i.getExtras();
-//        int k = 0;
-//        final ArrayList<ToDo> newData = new ArrayList<>();
-//        while (k <= lv.getCount()-4) {
-//            ToDo curr = (ToDo) bundle.getParcelable("Data"+k);
-//            newData.add(curr);
-//            k++;
-//        }
-
         Button backB = (Button) findViewById(R.id.editBackButton);
         Button editB = (Button) findViewById(R.id.editButton);
 
@@ -67,7 +57,6 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!titleEdit.getText().toString().equals(title)) { // title changed
-//                    System.out.println("Title text different: original title: " + title + " and new edittext title: " + titleEdit.getText().toString());
                     String newTitle = titleEdit.getText().toString();
                     updateTitle(newTitle, desc, date, position);
                 }
@@ -82,15 +71,10 @@ public class EditActivity extends AppCompatActivity {
 
     public void updateTitle(String newTitle, String desc, String date, int position){
         String fileName = "activities.txt";
-        //StringBuilder sb = new StringBuilder();
         Context con = getBaseContext();
 
         StringBuilder stringBuilder = new StringBuilder();
 
-
-        // TODO: go thru file line at a time, change the correct one
-
-        // todo test output (reading from file)
         try {
             FileInputStream fis = con.openFileInput(fileName);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -99,10 +83,8 @@ public class EditActivity extends AppCompatActivity {
             int i = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 if (i != position) {
-//                    System.out.println("List: ");
                     stringBuilder.append(line);
                     stringBuilder.append("\n");
-//                    System.out.println(stringBuilder.toString());
                 } else { // on the line we want
                     String[] theLine = line.split("///");
                     String oldTitle = theLine[0];
@@ -110,17 +92,12 @@ public class EditActivity extends AppCompatActivity {
                     line = theLine[0] + "///" + theLine[1] + "///" + theLine[2];
                     stringBuilder.append(line);
                     stringBuilder.append("\n");
-//                    System.out.println("On the line: title: " + oldTitle );
                 }
                 i++;
             }
         } catch (IOException io) {
             io.printStackTrace();
         }
-        //todo ending test read
-
-        //sb.append(title + "///" + description + "///" + date);
-        //sb.append("\n");
 
         // overwrite whole file with new SB
         try {
@@ -137,15 +114,10 @@ public class EditActivity extends AppCompatActivity {
 
     public void updateDesc(String newDesc, String title, String date, int position){
         String fileName = "activities.txt";
-        //StringBuilder sb = new StringBuilder();
         Context con = getBaseContext();
 
         StringBuilder stringBuilder = new StringBuilder();
 
-
-        // TODO: go thru file line at a time, change the correct one
-
-        // todo test output (reading from file)
         try {
             FileInputStream fis = con.openFileInput(fileName);
             InputStreamReader isr = new InputStreamReader(fis);
@@ -154,10 +126,8 @@ public class EditActivity extends AppCompatActivity {
             int i = 0;
             while ((line = bufferedReader.readLine()) != null) {
                 if (i != position) {
-//                    System.out.println("List: ");
                     stringBuilder.append(line);
                     stringBuilder.append("\n");
-//                    System.out.println(stringBuilder.toString());
                 } else { // on the line we want
                     String[] theLine = line.split("///");
                     String oldDesc = theLine[1];
@@ -165,17 +135,12 @@ public class EditActivity extends AppCompatActivity {
                     line = theLine[0] + "///" + theLine[1] + "///" + theLine[2];
                     stringBuilder.append(line);
                     stringBuilder.append("\n");
-//                    System.out.println("On the line: desc: " + oldDesc);
                 }
                 i++;
             }
         } catch (IOException io) {
             io.printStackTrace();
         }
-        //todo ending test read
-
-        //sb.append(title + "///" + description + "///" + date);
-        //sb.append("\n");
 
         // overwrite whole file with new SB
         try {

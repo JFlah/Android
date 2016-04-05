@@ -6,17 +6,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.SparseBooleanArray;
-import android.view.Menu;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -24,8 +18,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -33,8 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
     Context con;
     String fileName = "activities.txt";
     File file = new File(fileName);
-
-//    Button showDetail;
-//    Button editDetail;
-
     FileOutputStream outputStream;
 
     @Override
@@ -85,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
         clear = (Button) findViewById(R.id.clear_button);
         deleteSelected = (Button) findViewById(R.id.deleteSelectedButton);
 
-//        showDetail = (Button) findViewById(R.id.show_detail);
-//        editDetail = (Button) findViewById(R.id.edit_detail);
-
         // set listener(s)
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,9 +99,6 @@ public class MainActivity extends AppCompatActivity {
         deleteSelected.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                System.out.println(toDeleteArray.toString());
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
                 builder.setTitle("Confirm");
@@ -128,9 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing but close the dialog
-                        //System.out.println("delete");
                         deleteSelectedLines(toDeleteArray);
-                        //System.out.println("done del");
                         toDeleteArray = new ArrayList<>();
                         dialog.dismiss();
                     }
@@ -198,11 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (i == valuesArr.size()) {
                     valuesArr.add(toDo);
-                    //System.out.println("Title: " + toDo.getTitle());
-                    //System.out.println("Description: " + toDo.getDescription());
-                    //System.out.println("Date: " + toDo.getDate());
                     Toast.makeText(getBaseContext(), "New Item Added!", Toast.LENGTH_SHORT).show();
-                    //System.out.println("Adding it!");
                 }
             }
         } catch (IOException io) {
@@ -212,27 +186,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deleteSelectedLines(ArrayList<Integer> linesToDelete) {
-//        for (int line : linesToDelete) {
-//            //System.out.println("line to delete: " + line);
-//        }
         String fileName = "activities.txt";
-        //StringBuilder sb = new StringBuilder();
         Context con = getBaseContext();
 
 
         // READING FROM FILE, DELETING CORRECT ONES
         int z = 0;
         Collections.sort(linesToDelete);
-        //System.out.println("sorted list: " + linesToDelete.toString());
         for (int position : linesToDelete) {
             StringBuilder stringBuilder = new StringBuilder();
             boolean oneDone = false;
-            //linesToDelete.remove((Object) position);
-//            for (ToDo todo : valuesArr) {
-//                System.out.println("Values arr: " + todo.getTitle());
-//            }
-//            System.out.println("position to remove: " + position);
-//            System.out.println("current z: " + z);
             if (valuesArr.size() > 0)
                 valuesArr.remove(position-z);
 
@@ -245,24 +208,17 @@ public class MainActivity extends AppCompatActivity {
 
                 while ((line = bufferedReader.readLine()) != null) {
                     if (i != position-z) {
-//                        System.out.println("here");
-//                        System.out.println("List: ");
                         stringBuilder.append(line);
                         stringBuilder.append("\n");
-//                        System.out.println(stringBuilder.toString());
                     } else { // on the line we want to delete
-//                        System.out.println("on line to delete");
                         i++;
                         z++;
                         continue;
                     }
                     i++;
-                    //z++;
-//                    System.out.println("current sb: " + stringBuilder.toString());
                 }
                 // overwrite whole file with new SB
                 try {
-//                    System.out.println("reading new sb into file: " + stringBuilder.toString());
                     OutputStream outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
                     outputStream.write(stringBuilder.toString().getBytes());
                     outputStream.close();
@@ -273,10 +229,6 @@ public class MainActivity extends AppCompatActivity {
                     io.printStackTrace();
                 }
 
-//                System.out.println("sb after done looping: " + stringBuilder.toString());
-//                for (ToDo todo : valuesArr) {
-//                    System.out.println("Values arr: " + todo.getTitle());
-//                }
             } catch (IOException io) {
                 io.printStackTrace();
             }
@@ -317,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeFile() {
-//        System.out.println("Making file:");
         fileName = "activities.txt";
         con = getBaseContext();
         file = new File(con.getFilesDir(), fileName);

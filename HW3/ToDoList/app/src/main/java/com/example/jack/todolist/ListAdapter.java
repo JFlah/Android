@@ -108,12 +108,6 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
             /************  Set Model values in Holder elements ***********/
 
             holder.title.setText(tempValues.getTitle());
-//            holder.text1.setText( tempValues.getUrl() );
-//            holder.image.setImageResource(
-//                    res.getIdentifier(
-//                            "com.example.jack.todolist:drawable/"+tempValues.getImage()
-//                            ,null,null));
-
 
             /******** Set Item Click Listner for LayoutInflater for each row *******/
 
@@ -127,7 +121,6 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 ToDo current = (ToDo) data.get(position);
-                //System.out.println("Showing: " + current.getTitle());
                 Intent intent = new Intent(v.getContext(), ShowActivity.class);
                 intent.putExtra("Title", current.getTitle());
                 intent.putExtra("Description", current.getDescription());
@@ -140,7 +133,6 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 ToDo current = (ToDo) data.get(position);
-                //System.out.println("Editing: " + current.getTitle());
                 Intent intent = new Intent(v.getContext(), EditActivity.class);
                 intent.putExtra("Title", current.getTitle());
                 intent.putExtra("Description", current.getDescription());
@@ -158,15 +150,11 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
         holder.cBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                System.out.println("Changed at position:" + position);
                 if (isChecked) {
                     MainActivity.toDeleteArray.add(position);
-//                    System.out.println("Added to main array");
                 } else {
                     MainActivity.toDeleteArray.remove((Object)position);
-//                    System.out.println("deleting from main array");
                 }
-//                System.out.println(MainActivity.toDeleteArray.toString());
             }
         });
 
@@ -189,10 +177,7 @@ public class ListAdapter extends BaseAdapter implements View.OnClickListener {
         @Override
         public void onClick(View arg0) {
 
-
             MainActivity sct = (MainActivity)activity;
-
-//            System.out.println("Item click at pos: " + mPosition);
 
             /****  Call  onItemClick Method inside CustomListViewAndroidExample Class ( See Below )****/
 
