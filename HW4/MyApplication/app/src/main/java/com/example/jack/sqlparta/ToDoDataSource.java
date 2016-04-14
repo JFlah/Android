@@ -45,7 +45,6 @@ public class ToDoDataSource {
 
     public void deleteItem(ToDo item) {
         long id = item.getId();
-        System.out.println("Item deleted with id: " + id);
         database.delete(MySQLiteHelper.TodoEntry.TABLE_TODO, MySQLiteHelper.TodoEntry.COLUMN_ID
                 + " = " + id, null);
     }

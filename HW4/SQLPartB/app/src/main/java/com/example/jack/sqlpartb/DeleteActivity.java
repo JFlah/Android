@@ -52,7 +52,6 @@ public class DeleteActivity extends AppCompatActivity implements AdapterView.OnI
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         ToDo removedItem = myList.remove(position);
         mArrayAdapter.notifyDataSetChanged();
-
         deleted.add(removedItem);
     }
 }

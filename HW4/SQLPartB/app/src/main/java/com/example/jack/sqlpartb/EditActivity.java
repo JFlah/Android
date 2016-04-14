@@ -22,24 +22,20 @@ public class EditActivity extends AppCompatActivity {
 
         Intent fromIntent = getIntent();
         Bundle extras = fromIntent.getExtras();
-
         item = (ToDo)extras.getSerializable(MainActivity.TODO_ITEM);
 
         titleET = (EditText) findViewById(R.id.title);
         descET = (EditText) findViewById(R.id.desc);
-
         titleET.setText(item.title);
         descET.setText(item.desc);
-
     }
 
     public void addItem(View view){
-        // Set the activity result and return with finish()
-        String title = titleET.getText().toString();
         String desc = descET.getText().toString();
+        String title = titleET.getText().toString();
 
         if(title.isEmpty() || desc.isEmpty()){
-            Toast.makeText(EditActivity.this, "ADD ITEM PREASE!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditActivity.this, "Must do Entire Item", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -50,7 +46,6 @@ public class EditActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable(MainActivity.TODO_ITEM, item);
         intent.putExtras(bundle);
-
         setResult(MainActivity.OK_CODE, intent);
         finish();
     }

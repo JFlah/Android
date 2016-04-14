@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Edit A Detail"
+            android:text="Edit A ToDo Item"
             android:layout_weight="0.33"
             android:onClick="editDetailItem"/>
 
@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:onClick="deleteItem"
-            android:text="Delete an item"
+            android:text="Delete A ToDo Item"
             android:layout_below="@+id/myAddButton"
             android:layout_centerHorizontal="true"
             android:layout_weight="0.33"/>

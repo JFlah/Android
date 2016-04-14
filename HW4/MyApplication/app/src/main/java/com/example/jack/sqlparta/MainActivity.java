@@ -104,7 +104,6 @@ public class MainActivity extends ListActivity implements AdapterView.OnItemClic
             case ADD_CODE:
                 extras = data.getExtras();
                 item = (ToDo) extras.getSerializable(MainActivity.TODO_ITEM);
-                System.out.println(item);
                 if (item == null) break;
                 long rowId = datasource.createTodo(item.title, item.desc, item.time);
                 if (rowId != -1) {

@@ -1,9 +1,7 @@
 package com.example.jack.sqlpartb;
 
-
 import java.io.Serializable;
 import java.util.Date;
-
 
 public class ToDo implements Serializable {
     String title = null;
@@ -40,10 +38,6 @@ public class ToDo implements Serializable {
         return id;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -57,8 +51,8 @@ public class ToDo implements Serializable {
     }
 
     public String toString(){
-        String niceOutput = "Title: " + getTitle() + ". Description: " + getDesc() + ". DateCreated: " + getTime();
-        return niceOutput;
+        String returnS = "Title: " + getTitle() + " Description: " + getDesc() + " Date Made: " + getTime();
+        return returnS;
     }
 }
 

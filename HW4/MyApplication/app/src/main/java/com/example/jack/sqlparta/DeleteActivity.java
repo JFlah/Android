@@ -52,5 +52,4 @@ public class DeleteActivity extends AppCompatActivity implements AdapterView.OnI
         setResult(MainActivity.NOT_OK_CODE);
         finish();
     }
-
 }

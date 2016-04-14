@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -18,8 +17,6 @@ public class ToDoDataSource {
             MySQLiteHelper.TodoEntry.COLUMN_DESC,
             MySQLiteHelper.TodoEntry.COLUMN_DATE
     };
-
-    private static final String TAG = "TODODB";
 
     public ToDoDataSource(Context context, String tableName) {
         dbHelper = new MySQLiteHelper(context, tableName);
@@ -49,21 +46,12 @@ public class ToDoDataSource {
         values.put(MySQLiteHelper.TodoEntry.COLUMN_TITLE, item.title);
         values.put(MySQLiteHelper.TodoEntry.COLUMN_DESC, item.desc);
 
-        int rowsAffected = database.update(MySQLiteHelper.TodoEntry.TABLE_TODO, values, MySQLiteHelper.TodoEntry.COLUMN_ID+"="+item.getId(),null);
     }
 
     public void deleteItem(ToDo item) {
         long id = item.getId();
-        Log.d(TAG, "delete item = " + id);
-        System.out.println("Item deleted with id: " + id);
         database.delete(MySQLiteHelper.TodoEntry.TABLE_TODO, MySQLiteHelper.TodoEntry.COLUMN_ID
                 + " = " + id, null);
-    }
-
-    public void deleteAllItems() {
-        System.out.println("Item deleted all");
-        Log.d(TAG, "delete all = ");
-        database.delete(MySQLiteHelper.TodoEntry.TABLE_TODO, null, null);
     }
 
     public ArrayList<ToDo> getAllItems() {
@@ -75,7 +63,6 @@ public class ToDoDataSource {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             ToDo detail = cursorToItem(cursor);
-            Log.d(TAG, "get detail = " + cursorToItem(cursor).toString());
             items.add(detail);
             cursor.moveToNext();
         }

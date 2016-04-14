@@ -17,20 +17,15 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        Intent fromIntent = getIntent();
-        Bundle item = fromIntent.getExtras();
-
         titleET = (EditText) findViewById(R.id.title);
         descET = (EditText) findViewById(R.id.desc);
     }
 
     public void addItem(View view){
-        // Set the activity result and return with finish()
         String title = titleET.getText().toString();
         String desc = descET.getText().toString();
-
         if(title.isEmpty() || desc.isEmpty()){
-            Toast.makeText(AddActivity.this, "ADD ITEM PREASE!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddActivity.this, "Must do a whole item", Toast.LENGTH_SHORT).show();
             return;
         }
 

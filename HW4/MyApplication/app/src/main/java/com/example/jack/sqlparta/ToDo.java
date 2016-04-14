@@ -49,7 +49,7 @@ public class ToDo implements Serializable {
     }
 
     public String toString(){
-        return "Title: " + getTitle() + ". Description: " + getDesc() + ". DateCreated: " + getTime();
+        return "Title: " + getTitle() + ". Description: " + getDesc() + ". Date Made: " + getTime();
     }
 }
 
