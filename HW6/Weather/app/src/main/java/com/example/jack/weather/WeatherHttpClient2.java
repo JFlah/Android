@@ -7,13 +7,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import org.json.JSONObject;
-import org.json.JSONArray;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -48,7 +44,6 @@ public class WeatherHttpClient2 {
 
     }
 
-    //public byte[] getImage(String code) {
     public Bitmap getImage(String code) {
         InputStream in = null;
         int resCode = -1;
@@ -59,7 +54,6 @@ public class WeatherHttpClient2 {
             if (!(urlConn instanceof HttpURLConnection)) {
                 throw new IOException("URL is not an Http URL");
             }
-            //HttpURLConnection httpConn = (HttpURLConnection) urlConn;
             httpConn = (HttpURLConnection) urlConn;
             httpConn.setAllowUserInteraction(false);
             httpConn.setInstanceFollowRedirects(true);

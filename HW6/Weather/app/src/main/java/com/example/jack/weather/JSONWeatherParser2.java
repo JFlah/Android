@@ -18,7 +18,6 @@ public class JSONWeatherParser2 {
         List<Weather> weath = new ArrayList<>();
 
         // We create our JSONObject from the data
-        //JSONObject jObj = new JSONObject(data);
 
         JSONArray itemArray = jObj.getJSONArray("list");
 
@@ -35,10 +34,7 @@ public class JSONWeatherParser2 {
             loc.setLatitude(getFloat("lat", coordObj));
             loc.setLongitude(getFloat("lon", coordObj));
 
-            //JSONObject sysObj = getObject("sys", jObj);
             loc.setCountry(getString("country", cityObj));
-//            loc.setSunrise(getInt("sunrise", sysObj));
-//            loc.setSunset(getInt("sunset", sysObj));
 
             loc.setCity(getString("name", cityObj));
             weather.location = loc;
@@ -53,48 +49,25 @@ public class JSONWeatherParser2 {
             weather.currentCondition.setCondition(getString("main", JSONWeather));
             weather.currentCondition.setIcon(getString("icon", JSONWeather));
 
-            //JSONObject mainObj = getObject("main", jObj);
             weather.currentCondition.setHumidity(getInt("humidity", listItem));
             weather.currentCondition.setPressure(getInt("pressure", listItem));
 
             JSONObject tempObj = getObject("temp", listItem);
             weather.temperature.setMaxTemp(getFloat("max", tempObj));
             weather.temperature.setMinTemp(getFloat("min", tempObj));
-            //weather.temperature.setTemp(getFloat("temp", tempObj));
 
             // Wind, always present
-//            JSONObject wObj = getObject("wind", jObj);
             weather.wind.setSpeed(getFloat("speed", listItem));
             weather.wind.setDeg(getFloat("deg", listItem));
 
             // Clouds need try..catch to make sure if no clouds, app just does not die
             try {
-                //JSONObject cObj = getObject("clouds", listItem);
                 weather.clouds.setPerc(getInt("clouds", listItem));
             } catch (JSONException j) {
                 Log.e("No Clouds", j.toString());
             }
-            //Rain need try..catch to make sure if no rain, app just does not die
-//            try {
-//                JSONObject rObj = getObject("rain", jObj);
-//                weather.rain.setAmmount(getFloat("all", rObj));
-//            } catch (JSONException j) {
-//                Log.e("No Rain", j.toString());
-//            }
-
-//            //Snow need try..catch to make sure if no snow, app just does not die
-//            try {
-//                JSONObject sObj = getObject("snow", jObj);
-//                weather.snow.setAmmount(getFloat("all", sObj));
-//            } catch (JSONException j) {
-//                Log.e("No Snow", j.toString());
-//            }
-
             weath.add(weather);
-            //System.out.println("ADDED ONE!");
         }
-        // We download the icon to show
-
         return weath;
     }
 

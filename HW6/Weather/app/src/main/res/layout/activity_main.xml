@@ -10,6 +10,12 @@
         android:textSize="40sp"
         android:text="Your 3 Day Forecast"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:text="Click Day to See More!" />
+
     <EditText
         android:id="@+id/cityText"
         style="?android:attr/textAppearanceMedium"
@@ -25,7 +31,6 @@
         android:id="@+id/button"
         android:layout_gravity="center_horizontal"
         android:onClick="startTask" />
-
 
     <ListView
         android:id="@+id/wListView"
