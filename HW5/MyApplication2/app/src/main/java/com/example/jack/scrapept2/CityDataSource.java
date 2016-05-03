@@ -35,7 +35,7 @@ public class CityDataSource {
     }
 
     public void create() {
-        database.execSQL("create table " + MySQLiteHelper.CityEntry.TABLE_CITY + " (" +
+        database.execSQL("create table if not exists " + MySQLiteHelper.CityEntry.TABLE_CITY + " (" +
                 MySQLiteHelper.CityEntry.COLUMN_ID + " integer primary key autoincrement, " +
                 MySQLiteHelper.CityEntry.COLUMN_NAME  + " text not null, " +
                 MySQLiteHelper.CityEntry.COLUMN_OLDPOP + " text not null, " +
